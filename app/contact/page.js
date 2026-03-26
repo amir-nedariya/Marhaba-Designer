@@ -2,7 +2,7 @@
 
 "use client";
 
-export default function Home() {
+export default function Contact() {
   return (
     <>
       <h1>contact</h1>
