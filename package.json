@@ -10,17 +10,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "lucide-react": "^0.475.0",
     "next": "latest",
     "react": "latest",
-    "react-dom": "latest",
-    "lucide-react": "latest"
+    "react-dom": "latest"
   },
   "devDependencies": {
-    "tailwindcss": "latest",
     "@tailwindcss/postcss": "latest",
-    "postcss": "latest",
     "autoprefixer": "latest",
     "eslint": "latest",
-    "eslint-config-next": "latest"
+    "eslint-config-next": "latest",
+    "postcss": "latest",
+    "tailwindcss": "latest"
   }
 }

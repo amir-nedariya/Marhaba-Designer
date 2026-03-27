@@ -55,6 +55,34 @@ export const products = [
     description: "High-quality durable PVC cards for corporate and school IDs.",
     image: "https://images.unsplash.com/photo-1589753123709-02cd38a8e100?q=80&w=1974&auto=format&fit=crop",
   },
+  {
+    id: 9,
+    title: "Eco Printing Pamphlets",
+    category: "Marketing",
+    description: "High-volume marketing materials with sharp colors and premium feel.",
+    image: "https://images.unsplash.com/photo-1562654508-4c3112166946?q=80&w=1974&auto=format&fit=crop",
+  },
+  {
+    id: 10,
+    title: "Standard Bill Books",
+    category: "Office",
+    description: "Personalized receipt and bill books for organized business transactions.",
+    image: "https://images.unsplash.com/photo-1554224154-26032ffc0d07?q=80&w=2070&auto=format&fit=crop",
+  },
+  {
+    id: 11,
+    title: "Premium Letterheads",
+    category: "Office",
+    description: "Official corporate materials printed on luxury textured paper.",
+    image: "https://images.unsplash.com/photo-1586717796821-3b44a563dc4c?q=80&w=2070&auto=format&fit=crop",
+  },
+  {
+    id: 12,
+    title: "Luxury Business Envelopes",
+    category: "Office",
+    description: "Custom branded envelopes for a professional mailing experience.",
+    image: "https://images.unsplash.com/photo-1594918352619-422cc2bb6727?q=80&w=2070&auto=format&fit=crop",
+  },
 ];
 
 export const services = [

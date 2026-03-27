@@ -1,5 +1,5 @@
 import "./globals.css";
-import { Inter, Outfit } from "next/font/google";
+import { Inter, Poppins } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -8,9 +8,10 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-const outfit = Outfit({
+const poppins = Poppins({
   subsets: ["latin"],
-  variable: "--font-outfit",
+  weight: ["400", "500", "600", "700", "800", "900"],
+  variable: "--font-poppins",
 });
 
 export const metadata = {
@@ -29,7 +30,7 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${inter.variable} ${outfit.variable} flex flex-col min-h-screen bg-black text-white antialiased overflow-x-hidden w-full`}>
+      <body className={`${inter.variable} ${poppins.variable} flex flex-col min-h-screen bg-black text-white antialiased overflow-x-hidden w-full`}>
         <Navbar />
         <main className="flex-grow pt-20">
           {children}
