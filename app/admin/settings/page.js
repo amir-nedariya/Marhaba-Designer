@@ -13,6 +13,7 @@ import {
   ShieldCheck,
   Layout
 } from 'lucide-react';
+import { toast } from 'react-hot-toast';
 
 const getCroppedImg = (imageSrc, pixelCrop) => {
   const canvas = document.createElement('canvas');
@@ -60,7 +61,7 @@ const HeaderLogoUploader = ({ onUploadSuccess }) => {
 
   const processFile = (file) => {
     if (file && file.type.startsWith('image/')) {
-      if (file.size > 5 * 1024 * 1024) return alert("Max 5MB");
+      if (file.size > 5 * 1024 * 1024) return toast.error("Maximum allowed size is 5MB");
       const reader = new FileReader();
       reader.onload = (e) => { setImage(e.target.result); setIsCropping(true); };
       reader.readAsDataURL(file);

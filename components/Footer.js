@@ -1,104 +1,156 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Phone, Mail, MapPin } from "lucide-react";
+import { Phone, Mail, MapPin, Facebook, Instagram, Twitter } from "lucide-react";
 
 const Footer = () => {
+  const [data, setData] = useState(null);
+  const [logo, setLogo] = useState("/logo.jpg");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch('/api/admin/footer');
+        if (res.ok) setData(await res.json());
+      } catch (err) { console.error('Footer fetch error:', err); }
+    };
+
+    const fetchLogo = async () => {
+      try {
+        const res = await fetch('/api/settings');
+        if (res.ok) {
+          const s = await res.json();
+          if (s.header_logo) setLogo(s.header_logo);
+        }
+      } catch (err) { console.error(err); }
+    };
+
+    fetchData();
+    fetchLogo();
+  }, []);
+
+  const footerData = data || {
+    tagline: "Your one-stop solution for all professional printing and design needs. Excellence in every detail.",
+    socials: { facebook: "#", instagram: "#", twitter: "#" },
+    contact: { 
+      address: "Near Makki Masjid, Behind Ami Restaurent, Chhapi Highway, Ta.Vadgam, Dist. Banaskantha, Gujarat - 385210",
+      phone: "+91 70162 27040",
+      email: "marhabadesigner786@gmail.com"
+    },
+    services: ["Visiting Cards", "Flex Banners", "Custom Stickers", "Bill Books", "Office Supplies"],
+    quickLinks: [
+      { label: "Home", href: "/" },
+      { label: "Our Products", href: "/products" },
+      { label: "Get a Quote", href: "/contact" }
+    ]
+  };
+
   return (
-    <footer className="bg-black border-t border-white/10 pt-16 pb-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-          {/* Logo and Brand Info */}
-          <div className="space-y-4">
-            <Link href="/" className="flex items-center gap-3">
-              <div className="relative w-10 h-10 overflow-hidden rounded-full border border-white/20">
-                <Image
-                  src="/logo.jpg"
-                  alt="Marhaba Designer Logo"
-                  fill
-                  className="object-cover"
-                />
+    <footer className="bg-black border-t border-zinc-900 pt-20 pb-10">
+      <div className="max-w-[1600px] mx-auto px-6 lg:px-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 lg:gap-24 mb-20">
+          
+          {/* Section 1: Logo & Tagline */}
+          <div className="space-y-8">
+            <Link href="/" className="flex items-center gap-4 group">
+              <div className="relative w-14 h-14 overflow-hidden rounded-full border border-gold/30 p-0.5">
+                <div className="relative w-full h-full rounded-full overflow-hidden">
+                  <Image src={logo} alt="Marhaba" fill className="object-cover" />
+                </div>
               </div>
-              <span className="text-xl font-bold tracking-tight text-white">
+              <span className="text-2xl font-bold tracking-tight text-white">
                 Marhaba <span className="text-gold">Designer</span>
               </span>
             </Link>
-            <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
-              Your one-stop solution for all professional printing and design needs. Excellence in every detail.
+            <p className="text-[#a3a3a3] text-[15px] leading-relaxed max-w-sm">
+              {footerData.tagline}
             </p>
             <div className="flex gap-4">
-              <a href="#" className="p-2 bg-white/5 border border-white/10 rounded-lg hover:border-gold/50 hover:bg-gold/10 transition-all text-gray-400 hover:text-gold">
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path fillRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clipRule="evenodd" />
-                </svg>
-              </a>
-              <a href="#" className="p-2 bg-white/5 border border-white/10 rounded-lg hover:border-gold/50 hover:bg-gold/10 transition-all text-gray-400 hover:text-gold">
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path fillRule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clipRule="evenodd" />
-                </svg>
-              </a>
-              <a href="#" className="p-2 bg-white/5 border border-white/10 rounded-lg hover:border-gold/50 hover:bg-gold/10 transition-all text-gray-400 hover:text-gold">
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M13.6823 10.6218L20.2391 3H18.6854L12.9921 9.61788L8.44486 3H3.2002L10.0765 13.0074L3.2002 21H4.75404L10.7663 14.0113L15.5685 21H20.8131L13.6819 10.6218H13.6823ZM11.5541 13.0956L10.8574 12.0991L5.31391 4.16971H7.70053L12.1742 10.5689L12.8709 11.5655L18.6861 19.8835H16.2995L11.5541 13.096V13.0956Z" />
-                </svg>
-              </a>
+              {[
+                { icon: Facebook, href: footerData.socials.facebook },
+                { icon: Instagram, href: footerData.socials.instagram },
+                { icon: Twitter, href: footerData.socials.twitter }
+              ].map((social, i) => (
+                <a 
+                  key={i} 
+                  href={social.href} 
+                  target="_blank"
+                  className="w-12 h-12 flex items-center justify-center bg-[#111] border border-zinc-900 rounded-xl hover:border-gold/50 hover:text-gold transition-all duration-300"
+                >
+                  <social.icon size={20} strokeWidth={1.5} />
+                </a>
+              ))}
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-bold text-white mb-6">Quick Links</h3>
-            <ul className="space-y-3">
-              <li>
-                <Link href="/" className="text-gray-400 hover:text-gold text-sm transition-colors">Home</Link>
-              </li>
-              <li>
-                <Link href="/products" className="text-gray-400 hover:text-gold text-sm transition-colors">Our Products</Link>
-              </li>
-              <li>
-                <Link href="/contact" className="text-gray-400 hover:text-gold text-sm transition-colors">Get a Quote</Link>
-              </li>
+          {/* Section 2: Quick Links */}
+          <div className="space-y-10">
+            <h3 className="text-lg font-bold text-white tracking-wide">Quick Links</h3>
+            <ul className="space-y-6">
+              {footerData.quickLinks.map((link, i) => (
+                <li key={i}>
+                  <Link href={link.href} className="text-[#a3a3a3] hover:text-gold text-[15px] font-medium transition-colors">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Services */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-bold text-white mb-6">Our Services</h3>
-            <ul className="space-y-3 prose-li:text-gray-400">
-              <li className="text-gray-400 text-sm hover:text-gold transition-colors cursor-pointer">Visiting Cards</li>
-              <li className="text-gray-400 text-sm hover:text-gold transition-colors cursor-pointer">Flex Banners</li>
-              <li className="text-gray-400 text-sm hover:text-gold transition-colors cursor-pointer">Custom Stickers</li>
-              <li className="text-gray-400 text-sm hover:text-gold transition-colors cursor-pointer">Bill Books</li>
-              <li className="text-gray-400 text-sm hover:text-gold transition-colors cursor-pointer">Office Supplies</li>
+          {/* Section 3: Our Services */}
+          <div className="space-y-10">
+            <h3 className="text-lg font-bold text-white tracking-wide">Our Services</h3>
+            <ul className="space-y-6">
+              {footerData.services.map((service, i) => (
+                <li key={i} className="text-[#a3a3a3] hover:text-gold text-[15px] font-medium transition-colors cursor-pointer">
+                  {service}
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Contact Info */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-bold text-white mb-6">Contact Us</h3>
-            <ul className="space-y-4">
-              <li className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 text-gold shrink-0 mt-0.5" />
-                <span className="text-gray-400 text-sm">Near Makki Masjid, Behind Ami Restaurent, Chhapi Highway, Ta.Vadgam, Dist. Banaskantha, Gujarat - 385210</span>
+          {/* Section 4: Contact Us */}
+          <div className="space-y-10">
+            <h3 className="text-lg font-bold text-white tracking-wide">Contact Us</h3>
+            <ul className="space-y-8">
+              <li className="flex items-start gap-4">
+                <div className="mt-1 bg-gold/10 p-1.5 rounded-lg border border-gold/20">
+                  <MapPin className="text-gold" size={18} />
+                </div>
+                <span className="text-[#a3a3a3] text-[15px] leading-relaxed">
+                  {footerData.contact.address}
+                </span>
               </li>
-              <li className="flex items-center gap-3">
-                <Phone className="w-5 h-5 text-gold shrink-0" />
-                <span className="text-gray-400 text-sm">+91 70162 27040</span>
+              <li className="flex items-center gap-4">
+                <div className="bg-gold/10 p-1.5 rounded-lg border border-gold/20">
+                  <Phone className="text-gold" size={18} />
+                </div>
+                <span className="text-[#a3a3a3] text-[15px] font-medium">
+                  {footerData.contact.phone}
+                </span>
               </li>
-              <li className="flex items-center gap-3">
-                <Mail className="w-5 h-5 text-gold shrink-0" />
-                <span className="text-gray-400 text-sm">marhabadesigner786@gmail.com</span>
+              <li className="flex items-center gap-4">
+                <div className="bg-gold/10 p-1.5 rounded-lg border border-gold/20">
+                  <Mail className="text-gold" size={18} />
+                </div>
+                <span className="text-[#a3a3a3] text-[15px] font-medium hover:text-gold transition-colors cursor-pointer">
+                  {footerData.contact.email}
+                </span>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="border-t border-white/5 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-gray-500 text-xs">
+        {/* Bottom Bar */}
+        <div className="border-t border-zinc-900 pt-10 flex flex-col md:flex-row justify-between items-center gap-6">
+          <p className="text-[#555] text-sm">
             © {new Date().getFullYear()} Marhaba Designer. All rights reserved.
           </p>
-          <div className="flex gap-6 text-xs text-gray-500">
-            <a href="#" className="hover:text-gold transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-gold transition-colors">Terms of Service</a>
+          <div className="flex gap-10">
+            <Link href="/privacy" className="text-[#555] hover:text-gold text-sm transition-colors font-medium">Privacy Policy</Link>
+            <Link href="/terms" className="text-[#555] hover:text-gold text-sm transition-colors font-medium">Terms of Service</Link>
           </div>
         </div>
       </div>
