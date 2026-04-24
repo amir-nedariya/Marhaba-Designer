@@ -198,14 +198,14 @@ export default function FooterAdminPage() {
                 <div className="w-1.5 h-1.5 bg-gold rounded-full" />
                 Services
               </h2>
-              <button 
+              <button
                 onClick={() => addItem('services', '')}
                 className="p-2 bg-gold/10 text-gold hover:bg-gold hover:text-black rounded-full transition-all"
               >
                 <Plus size={16} />
               </button>
             </div>
-            
+
             <div className="space-y-3">
               {footer.services.map((service, idx) => (
                 <div key={idx} className="flex gap-3 group">
@@ -216,7 +216,7 @@ export default function FooterAdminPage() {
                     className="flex-1 bg-black/40 border border-zinc-800 rounded-xl p-4 text-xs text-white outline-none focus:border-gold/40 transition-all font-medium"
                     placeholder="e.g. Visiting Cards"
                   />
-                  <button 
+                  <button
                     onClick={() => removeItem('services', idx)}
                     className="p-4 text-zinc-700 hover:text-red-500 hover:bg-red-500/10 rounded-xl transition-all"
                   >
@@ -234,7 +234,7 @@ export default function FooterAdminPage() {
                 <div className="w-1.5 h-1.5 bg-gold rounded-full" />
                 Navigation Links
               </h2>
-              <button 
+              <button
                 onClick={() => addItem('quickLinks', { label: '', href: '' })}
                 className="p-2 bg-gold/10 text-gold hover:bg-gold hover:text-black rounded-full transition-all"
               >
@@ -272,7 +272,7 @@ export default function FooterAdminPage() {
                       </div>
                     </div>
                   </div>
-                  <button 
+                  <button
                     onClick={() => removeItem('quickLinks', idx)}
                     className="absolute -top-2 -right-2 w-8 h-8 bg-zinc-900 border border-zinc-800 text-zinc-500 hover:text-red-500 rounded-full flex items-center justify-center shadow-xl opacity-0 group-hover:opacity-100 transition-all"
                   >

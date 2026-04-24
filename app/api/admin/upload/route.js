@@ -14,27 +14,37 @@ export async function POST(request) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // Create unique filename
-    const filename = Date.now() + '-' + file.name.replace(/\s+/g, '-');
-    const uploadDir = path.join(process.cwd(), 'public', 'uploads');
-    
-    // Ensure directory exists
-    try {
-      await mkdir(uploadDir, { recursive: true });
-    } catch (err) {
-      // Directory likely already exists
-    }
+    let fileUrl = '';
 
-    const filePath = path.join(uploadDir, filename);
-    await writeFile(filePath, buffer);
+    // Strategy: Try Local Storage first (Dev), Waterfall to Base64 (Vercel)
+    try {
+      const filename = Date.now() + '-' + file.name.replace(/\s+/g, '-');
+      const uploadDir = path.join(process.cwd(), 'public', 'uploads');
+      
+      await mkdir(uploadDir, { recursive: true });
+      const filePath = path.join(uploadDir, filename);
+      await writeFile(filePath, buffer);
+      
+      fileUrl = `/uploads/${filename}`;
+    } catch (err) {
+      console.warn('Vercel environment detected or FS restricted. Using Base64 fallback.');
+      
+      // Fallback for Vercel: Return Base64 Data URI
+      const base64 = buffer.toString('base64');
+      const mimeType = file.type || 'image/png';
+      fileUrl = `data:${mimeType};base64,${base64}`;
+    }
 
     return NextResponse.json({ 
       success: true, 
-      url: `/uploads/${filename}` 
+      url: fileUrl 
     });
 
   } catch (error) {
-    console.error('Upload Error:', error);
-    return NextResponse.json({ error: 'Failed to upload file' }, { status: 500 });
+    console.error('Core Upload Error:', error);
+    return NextResponse.json({ 
+      error: 'Failed to process file', 
+      details: error.message 
+    }, { status: 500 });
   }
 }

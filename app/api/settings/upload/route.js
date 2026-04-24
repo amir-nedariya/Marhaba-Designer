@@ -16,23 +16,29 @@ export async function POST(request) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // Create unique filename
-    const filename = `${Date.now()}-${file.name.replace(/\s+/g, '-')}`;
-    const uploadDir = join(process.cwd(), 'public', 'uploads');
-    
-    // Ensure directory exists
+    let fileUrl = '';
+    const isVercel = process.env.VERCEL === '1' || process.env.NODE_ENV === 'production';
+
+    // Attempt local storage save (Only works in Dev/Local)
     try {
+      const filename = `${Date.now()}-${file.name.replace(/\s+/g, '-')}`;
+      const uploadDir = join(process.cwd(), 'public', 'uploads');
+      
       await mkdir(uploadDir, { recursive: true });
-    } catch (err) {
-      // already exists
+      const path = join(uploadDir, filename);
+      await writeFile(path, buffer);
+      
+      fileUrl = `/uploads/${filename}`;
+    } catch (fsError) {
+      console.warn('Local FS write failed, falling back to Base64 (Expected on Vercel)');
+      
+      // FALLBACK: Convert to Data URI for Vercel
+      const base64 = buffer.toString('base64');
+      const mime = file.type || 'image/png';
+      fileUrl = `data:${mime};base64,${base64}`;
     }
 
-    const path = join(uploadDir, filename);
-    await writeFile(path, buffer);
-
-    const fileUrl = `/uploads/${filename}`;
-
-    // Also update settings in MongoDB
+    // Update settings in MongoDB
     await connectToDatabase();
     await Settings.findOneAndUpdate(
       { key: 'header_logo' },
@@ -46,7 +52,10 @@ export async function POST(request) {
     });
 
   } catch (error) {
-    console.error('Upload Error:', error);
-    return NextResponse.json({ error: 'Upload failed', details: error.message }, { status: 500 });
+    console.error('Settings Upload Error:', error);
+    return NextResponse.json({ 
+      error: 'Upload failed', 
+      details: error.message 
+    }, { status: 500 });
   }
 }

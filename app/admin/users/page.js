@@ -7,7 +7,7 @@ export default function UsersPage() {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
-  
+
   // New user form state
   const [newUser, setNewUser] = useState({
     email: '',
@@ -116,7 +116,7 @@ export default function UsersPage() {
                 Register New User
               </h2>
             </div>
-            
+
             <form onSubmit={handleAddUser} className="p-6 space-y-5">
               <div className="space-y-2">
                 <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest ml-1">Email Address</label>
@@ -126,7 +126,7 @@ export default function UsersPage() {
                     type="email"
                     required
                     value={newUser.email}
-                    onChange={(e) => setNewUser({...newUser, email: e.target.value})}
+                    onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
                     placeholder="admin@marhaba.com"
                     className="w-full bg-black/40 border border-zinc-800/50 rounded-xl py-3.5 pl-12 pr-4 text-sm text-zinc-200 placeholder:text-zinc-700 focus:outline-none focus:ring-1 focus:ring-gold/30 focus:border-gold/30 transition-all"
                   />
@@ -139,7 +139,7 @@ export default function UsersPage() {
                   type="password"
                   required
                   value={newUser.password}
-                  onChange={(e) => setNewUser({...newUser, password: e.target.value})}
+                  onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
                   placeholder="••••••••"
                   className="w-full bg-black/40 border border-zinc-800/50 rounded-xl py-3.5 px-4 text-sm text-zinc-200 placeholder:text-zinc-700 focus:outline-none focus:ring-1 focus:ring-gold/30 focus:border-gold/30 transition-all"
                 />
@@ -149,7 +149,7 @@ export default function UsersPage() {
                 <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest ml-1">Assignment Role</label>
                 <select
                   value={newUser.role}
-                  onChange={(e) => setNewUser({...newUser, role: e.target.value})}
+                  onChange={(e) => setNewUser({ ...newUser, role: e.target.value })}
                   className="w-full bg-black/40 border border-zinc-800/50 rounded-xl py-3.5 px-4 text-sm text-zinc-200 focus:outline-none focus:ring-1 focus:ring-gold/30 transition-all appearance-none cursor-pointer"
                 >
                   <option value="admin" className="bg-[#0a0a0a]">Administrator</option>
@@ -216,8 +216,8 @@ export default function UsersPage() {
                         </td>
                         <td className="px-6 py-5">
                           <span className={`px-2 py-1 rounded-md text-[9px] font-bold uppercase tracking-widest border
-                            ${user.role === 'super_admin' 
-                              ? 'bg-gold/10 text-gold border-gold/20' 
+                            ${user.role === 'super_admin'
+                              ? 'bg-gold/10 text-gold border-gold/20'
                               : user.role === 'admin'
                                 ? 'bg-blue-500/10 text-blue-400 border-blue-500/20'
                                 : 'bg-zinc-800 text-zinc-400 border-zinc-700'}

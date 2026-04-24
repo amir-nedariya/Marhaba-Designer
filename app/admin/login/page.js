@@ -113,7 +113,7 @@ export default function AdminLogin() {
             <div className="absolute top-0 right-0 w-32 h-32 bg-gold/5 blur-3xl rounded-full translate-x-1/2 -translate-y-1/2" />
 
             <div className="mb-10 text-center">
-              <h1 className="text-3xl font-black text-zinc-900 tracking-tight">Login Portal</h1>
+              <h1 className="text-3xl font-black text-zinc-900 tracking-tight">Admin Login</h1>
               <p className="text-zinc-400 text-sm mt-1">Authorized access to management dashboard</p>
             </div>
 
@@ -128,7 +128,7 @@ export default function AdminLogin() {
               <div className="space-y-6">
                 {/* Email */}
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black text-zinc-400 uppercase tracking-widest ml-1">Account Holder</label>
+                  <label className="text-[10px] font-black text-zinc-400 uppercase tracking-widest ml-1">Admin Email</label>
                   <div className="relative group">
                     <div className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-gold transition-colors">
                       <Mail size={18} />
@@ -146,7 +146,7 @@ export default function AdminLogin() {
 
                 {/* Password */}
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black text-zinc-400 uppercase tracking-widest ml-1">Security Key</label>
+                  <label className="text-[10px] font-black text-zinc-400 uppercase tracking-widest ml-1">Access Password</label>
                   <div className="relative group">
                     <div className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-gold transition-colors">
                       <Lock size={18} />
@@ -178,13 +178,13 @@ export default function AdminLogin() {
                 {loading ? (
                   <Loader2 className="animate-spin" size={18} />
                 ) : (
-                  <>Login to System <ArrowRight size={18} /></>
+                  <>Access Dashboard  <ArrowRight size={18} /></>
                 )}
               </button>
             </form>
 
             <p className="mt-8 text-center text-zinc-400 text-[9px] font-bold uppercase tracking-[0.2em]">
-              Encrypted Session • Marhaba Designer
+              Secure • Marhaba Designer
             </p>
           </div>
         </div>
