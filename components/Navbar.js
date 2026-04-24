@@ -7,11 +7,26 @@ import { Menu, X } from "lucide-react";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [logo, setLogo] = useState("/logo.jpg");
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
+
+    const fetchLogo = async () => {
+      try {
+        const res = await fetch('/api/settings');
+        if (res.ok) {
+          const data = await res.json();
+          if (data.header_logo) setLogo(data.header_logo);
+        }
+      } catch (err) {
+        console.error('Failed to fetch navbar logo:', err);
+      }
+    };
+
+    fetchLogo();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -33,7 +48,7 @@ const Navbar = () => {
             <Link href="/" className="flex items-center gap-3">
               <div className="relative w-12 h-12 overflow-hidden rounded-full border border-white/20">
                 <Image
-                  src="/logo.jpg"
+                  src={logo}
                   alt="Marhaba Designer Logo"
                   fill
                   className="object-cover"

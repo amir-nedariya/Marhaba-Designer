@@ -57,11 +57,26 @@ export default function Hero({
   description = "Transforming your ideas into luxury reality with the most professional printing equipment and creative expertise."
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [logo, setLogo] = useState("/logo.jpg");
 
   useEffect(() => {
     const timer = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % printingItems.length);
     }, 4000);
+
+    const fetchLogo = async () => {
+      try {
+        const res = await fetch('/api/settings');
+        if (res.ok) {
+          const data = await res.json();
+          if (data.header_logo) setLogo(data.header_logo);
+        }
+      } catch (err) {
+        console.error('Failed to fetch hero logo:', err);
+      }
+    };
+
+    fetchLogo();
     return () => clearInterval(timer);
   }, []);
 
@@ -87,7 +102,7 @@ export default function Hero({
             <div className="mb-6 flex items-center gap-4">
               <div className="relative h-12 w-12 lg:h-14 lg:w-14 shrink-0 overflow-hidden">
                 <Image
-                  src="/images/marhaba_logo.png"
+                  src={logo}
                   alt="Marhaba Logo"
                   fill
                   className="object-cover scale-110"

@@ -1,7 +1,5 @@
 import "./globals.css";
 import { Inter, Poppins } from "next/font/google";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -31,11 +29,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${inter.variable} ${poppins.variable} flex flex-col min-h-screen bg-black text-white antialiased overflow-x-hidden w-full`}>
-        <Navbar />
-        <main className="flex-grow pt-20">
-          {children}
-        </main>
-        <Footer />
+        {children}
       </body>
     </html>
   );
