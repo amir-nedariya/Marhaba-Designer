@@ -70,7 +70,6 @@ export default function Hero() {
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <div className="absolute top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 h-[600px] w-[600px] lg:h-[800px] lg:w-[800px] rounded-full bg-gold/10 blur-[120px] lg:blur-[150px] opacity-40" />
         <div className="absolute top-1/3 right-0 translate-x-1/2 -translate-y-1/2 h-[800px] w-[800px] lg:h-[1000px] lg:w-[1000px] rounded-full bg-white/5 blur-[150px] lg:blur-[180px] opacity-20" />
-        <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent -translate-x-full animate-[sweep_12s_ease-in-out_infinite]" />
       </div>
 
       <div className="relative z-10 mx-auto grid max-w-[1600px] w-full items-center gap-12 lg:gap-32 grid-cols-1 lg:grid-cols-2 lg:px-12">
@@ -126,12 +125,14 @@ export default function Hero() {
         </div>
       </div>
 
-      <style jsx>{`
-        @keyframes sweep {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(100%); }
-        }
-      `}</style>
+
+
+      {/* --- BOTTOM SHAPE DIVIDER --- */}
+      <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0]">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block w-full h-[40px] md:h-[80px]">
+          <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="#ffffff"></path>
+        </svg>
+      </div>
     </section>
   );
 }

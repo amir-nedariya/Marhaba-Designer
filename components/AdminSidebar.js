@@ -12,7 +12,8 @@ import {
   Monitor,
   PenTool,
   LogOut,
-  ChevronLeft
+  ChevronLeft,
+  List
 } from 'lucide-react';
 import Image from 'next/image';
 
@@ -109,6 +110,22 @@ export default function AdminSidebar({ isCollapsed, onToggle }) {
                   icon={Monitor}
                   label="Hero Content"
                   active={isActive('/admin/hero')}
+                  isCollapsed={isCollapsed}
+                  isSubItem={!isCollapsed}
+                />
+                <SidebarLink
+                  href="/admin/products"
+                  icon={LayoutDashboard}
+                  label="Products Section"
+                  active={isActive('/admin/products')}
+                  isCollapsed={isCollapsed}
+                  isSubItem={!isCollapsed}
+                />
+                <SidebarLink
+                  href="/admin/services"
+                  icon={List}
+                  label="Dropdown Options"
+                  active={isActive('/admin/services')}
                   isCollapsed={isCollapsed}
                   isSubItem={!isCollapsed}
                 />

@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { products } from "@/data/products";
 import ProductCard from "@/components/ProductCard";
+import LightProductCarousel from "@/components/LightProductCarousel";
 
 import Hero from "@/components/Hero";
 
@@ -77,6 +78,7 @@ export default function Home() {
           </div>
         </section> */}
 
+        <LightProductCarousel />
 
         {/* --- FINAL CTA --- */}
         {/* <section className="mx-auto max-w-5xl px-4 py-32 text-center items-center flex flex-col">
