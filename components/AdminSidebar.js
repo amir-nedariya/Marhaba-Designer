@@ -13,7 +13,8 @@ import {
   PenTool,
   LogOut,
   ChevronLeft,
-  List
+  List,
+  ShoppingCart
 } from 'lucide-react';
 import Image from 'next/image';
 
@@ -140,6 +141,14 @@ export default function AdminSidebar({ isCollapsed, onToggle }) {
               </div>
             )}
           </div>
+
+          <SidebarLink
+            href="/admin/orders"
+            icon={ShoppingCart}
+            label="Product Orders"
+            active={isActive('/admin/orders')}
+            isCollapsed={isCollapsed}
+          />
 
           <SidebarLink
             href="/admin/inquiries"

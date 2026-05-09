@@ -7,7 +7,7 @@ export async function GET() {
   try {
     await connectToDatabase();
     let footer = await FooterSettings.findOne();
-    
+
     if (!footer) {
       footer = await FooterSettings.create({
         services: ["Visiting Cards", "Flex Banners", "Custom Stickers", "Bill Books", "Office Supplies"],
@@ -18,7 +18,7 @@ export async function GET() {
         ]
       });
     }
-    
+
     return NextResponse.json(footer);
   } catch (error) {
     return NextResponse.json({ error: 'Failed to fetch footer content' }, { status: 500 });
@@ -30,15 +30,15 @@ export async function POST(request) {
   try {
     await connectToDatabase();
     const data = await request.json();
-    
+
     let footer = await FooterSettings.findOne();
-    
+
     if (footer) {
       footer = await FooterSettings.findByIdAndUpdate(footer._id, data, { new: true });
     } else {
       footer = await FooterSettings.create(data);
     }
-    
+
     return NextResponse.json(footer);
   } catch (error) {
     return NextResponse.json({ error: 'Failed to update footer content' }, { status: 500 });

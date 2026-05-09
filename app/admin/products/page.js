@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { Save, Plus, Trash2, Image as ImageIcon, Layout, Loader2, UploadCloud, GripVertical } from 'lucide-react';
+import { Save, Plus, Trash2, Image as ImageIcon, Layout, Loader2, UploadCloud, GripVertical, ChevronDown, ChevronUp } from 'lucide-react';
 import Image from 'next/image';
 import { toast } from 'react-hot-toast';
 
@@ -27,12 +27,6 @@ export default function ProductsAdminPage() {
   const handleSave = async () => {
     setSaving(true);
     try {
-      // In a more complex scenario we might do individual PUTs or a bulk update.
-      // But we can just create/update each product.
-      // Since our API currently supports single POST/PUT, we can loop through.
-      // But it's easier if we just have a "save all" bulk endpoint, or just save them one by one.
-      
-      // We will loop and save
       for (const p of products) {
         if (p._id) {
           await fetch('/api/admin/products', {
@@ -59,7 +53,22 @@ export default function ProductsAdminPage() {
   };
 
   const addProduct = () => {
-    setProducts([...products, { title: '', image: '', order: products.length }]);
+    setProducts([...products, { 
+      title: '', 
+      image: '', 
+      order: products.length,
+      description: 'High quality printing, perfect finishes and luxury look for your brand.',
+      sizes: ['Standard (3.5 x 2 inch)', 'Custom Size'],
+      finishes: ['Matte', 'Glossy', 'Velvet'],
+      rating: 4.9,
+      reviewsCount: 120,
+      quantityOptions: [
+        { label: "100 Cards", price: "299", badge: "" },
+        { label: "250 Cards", price: "599", badge: "" },
+        { label: "500 Cards", price: "999", badge: "Popular" },
+        { label: "1000 Cards", price: "1899", badge: "Best Value" }
+      ]
+    }]);
   };
 
   const removeProduct = async (index) => {
@@ -81,6 +90,24 @@ export default function ProductsAdminPage() {
     const newProducts = [...products];
     newProducts[index][field] = value;
     setProducts(newProducts);
+  };
+
+  const parseArrayInput = (value) => value.split(',').map(s => s.trim()).filter(Boolean);
+
+  const parseQuantityOptions = (text) => {
+    return text.split('\n').filter(line => line.trim()).map(line => {
+      const parts = line.split('|').map(s => s.trim());
+      return {
+        label: parts[0] || '',
+        price: parts[1] || '0',
+        badge: parts[2] || ''
+      };
+    });
+  };
+
+  const stringifyQuantityOptions = (options) => {
+    if (!options) return "";
+    return options.map(opt => `${opt.label} | ${opt.price}${opt.badge ? ` | ${opt.badge}` : ''}`).join('\n');
   };
 
   const handleFileUpload = async (index, file) => {
@@ -114,7 +141,7 @@ export default function ProductsAdminPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
           <h1 className="text-4xl font-light text-white mb-2">Our <span className="text-gold font-bold">Products</span></h1>
-          <p className="text-zinc-500 text-[10px] font-bold uppercase tracking-[0.3em]">Carousel Management</p>
+          <p className="text-zinc-500 text-[10px] font-bold uppercase tracking-[0.3em]">Carousel & Details Management</p>
         </div>
         <button
           onClick={handleSave}
@@ -130,7 +157,7 @@ export default function ProductsAdminPage() {
         <div className="flex items-center justify-between px-2">
           <h2 className="text-sm font-black text-zinc-400 uppercase tracking-[0.4em] flex items-center gap-3">
             <div className="w-1.5 h-1.5 bg-gold rounded-full" />
-            Products Carousel
+            Products Configuration
           </h2>
           <button
             onClick={addProduct}
@@ -140,11 +167,11 @@ export default function ProductsAdminPage() {
           </button>
         </div>
 
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 md:grid-cols-2 gap-8">
           {products.map((prod, idx) => (
-            <div key={idx} className="bg-zinc-900/40 border border-zinc-800/60 rounded-[2rem] p-6 group relative animate-in fade-in zoom-in-95 duration-500">
+            <div key={idx} className="bg-zinc-900/40 border border-zinc-800/60 rounded-[2rem] p-6 group relative animate-in fade-in zoom-in-95 duration-500 flex flex-col">
               <div
-                className={`relative h-56 w-full mb-6 rounded-2xl overflow-hidden border-2 border-dashed transition-all duration-300 flex flex-col items-center justify-center
+                className={`relative h-64 w-full mb-6 rounded-2xl overflow-hidden border-2 border-dashed transition-all duration-300 flex flex-col items-center justify-center shrink-0
                   ${prod.image ? 'border-zinc-800' : 'border-zinc-800 hover:border-gold/40 bg-black/40'}
                 `}
                 onDragOver={(e) => { e.preventDefault(); e.currentTarget.classList.add('border-gold/40', 'bg-gold/5'); }}
@@ -177,21 +204,64 @@ export default function ProductsAdminPage() {
                 )}
               </div>
 
-              <div className="flex gap-3 mb-3">
+              <div className="flex gap-3 mb-4">
                 <input
                   type="text"
                   placeholder="Title | e.g. Business Cards"
                   value={prod.title}
                   onChange={(e) => updateProduct(idx, 'title', e.target.value)}
-                  className="flex-1 bg-black/40 border border-zinc-800 rounded-xl p-4 text-xs text-white outline-none focus:border-gold/40 transition-all font-medium"
+                  className="flex-1 bg-black/40 border border-zinc-800 rounded-xl p-4 text-sm text-white outline-none focus:border-gold/40 transition-all font-bold"
                 />
                 <button
                   onClick={() => removeProduct(idx)}
-                  className="p-4 text-zinc-700 hover:text-red-500 hover:bg-red-500/10 rounded-xl transition-all"
+                  className="p-4 text-zinc-700 hover:text-red-500 hover:bg-red-500/10 rounded-xl transition-all shrink-0"
                 >
-                  <Trash2 size={16} />
+                  <Trash2 size={18} />
                 </button>
               </div>
+
+              <div className="space-y-4">
+                <textarea
+                  placeholder="Description..."
+                  value={prod.description}
+                  onChange={(e) => updateProduct(idx, 'description', e.target.value)}
+                  className="w-full bg-black/40 border border-zinc-800 rounded-xl p-4 text-sm text-white outline-none focus:border-gold/40 transition-all font-medium resize-none h-24"
+                />
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2 block">Sizes (Comma separated)</label>
+                    <input
+                      type="text"
+                      value={(prod.sizes || []).join(', ')}
+                      onChange={(e) => updateProduct(idx, 'sizes', parseArrayInput(e.target.value))}
+                      className="w-full bg-black/40 border border-zinc-800 rounded-xl p-3 text-sm text-white outline-none focus:border-gold/40 transition-all font-medium"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2 block">Finishes (Comma separated)</label>
+                    <input
+                      type="text"
+                      value={(prod.finishes || []).join(', ')}
+                      onChange={(e) => updateProduct(idx, 'finishes', parseArrayInput(e.target.value))}
+                      className="w-full bg-black/40 border border-zinc-800 rounded-xl p-3 text-sm text-white outline-none focus:border-gold/40 transition-all font-medium"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2 block">
+                    Quantity Options <span className="text-zinc-600">(Format: Label | Price | Badge) - 1 per line</span>
+                  </label>
+                  <textarea
+                    value={stringifyQuantityOptions(prod.quantityOptions)}
+                    onChange={(e) => updateProduct(idx, 'quantityOptions', parseQuantityOptions(e.target.value))}
+                    className="w-full bg-black/40 border border-zinc-800 rounded-xl p-4 text-sm text-white outline-none focus:border-gold/40 transition-all font-mono resize-none h-32"
+                    placeholder="100 Cards | 299 | &#10;500 Cards | 999 | Popular"
+                  />
+                </div>
+              </div>
+
             </div>
           ))}
         </div>

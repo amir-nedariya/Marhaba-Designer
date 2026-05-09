@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/mongodb';
 import HeroContent from '@/models/HeroContent';
 
+export const dynamic = 'force-dynamic';
+
 // GET hero settings
 export async function GET() {
   try {

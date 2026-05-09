@@ -3,11 +3,13 @@
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 
 
 export default function LightProductCarousel() {
   const scrollRef = useRef(null);
+  const router = useRouter();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -73,7 +75,10 @@ export default function LightProductCarousel() {
                 key={product._id || idx}
                 className="flex-none w-[85vw] sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] snap-center"
               >
-                <div className="bg-white rounded-2xl border border-gray-100 shadow-[0_4px_20px_rgb(0,0,0,0.05)] overflow-hidden h-full flex flex-col group hover:shadow-[0_8px_30px_rgb(0,0,0,0.1)] transition-all duration-300">
+                <div 
+                  onClick={() => router.push(`/products/${product._id}`)}
+                  className="cursor-pointer bg-white rounded-2xl border border-gray-100 shadow-[0_4px_20px_rgb(0,0,0,0.05)] overflow-hidden h-full flex flex-col group hover:shadow-[0_8px_30px_rgb(0,0,0,0.1)] transition-all duration-300"
+                >
                   <div className="relative aspect-[4/3] w-full bg-[#f8f9fa] p-8 flex items-center justify-center">
                     <div className="relative w-full h-full transform transition-transform duration-500 group-hover:scale-105">
                       <Image

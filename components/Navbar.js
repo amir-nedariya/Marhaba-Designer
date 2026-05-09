@@ -46,7 +46,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center gap-3">
-              <div className="relative w-10 h-10 overflow-hidden rounded-full border border-white/20">
+              <div className="relative w-12 h-12 overflow-hidden rounded-full border border-white/20">
                 <Image
                   src={logo}
                   alt="Marhaba Designer Logo"

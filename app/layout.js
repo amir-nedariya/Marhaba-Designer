@@ -30,7 +30,7 @@ import { Toaster } from "react-hot-toast";
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${inter.variable} ${poppins.variable} flex flex-col min-h-screen bg-black text-white antialiased overflow-x-hidden w-full`}>
+      <body suppressHydrationWarning className={`${inter.variable} ${poppins.variable} flex flex-col min-h-screen bg-black text-white antialiased overflow-x-hidden w-full`}>
         <Toaster 
           position="bottom-right"
           toastOptions={{

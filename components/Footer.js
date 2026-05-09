@@ -60,7 +60,7 @@ const Footer = () => {
           <div className="lg:col-span-4 space-y-8 lg:pr-8">
             <Link href="/" className="flex items-center gap-3 group">
               <div className="relative w-12 h-12 overflow-hidden rounded-full border border-white/20 group-hover:border-gold/50 transition-colors">
-                <Image src={logo} alt="Marhaba Designer" fill className="object-cover" />
+                <Image src={logo} alt="Marhaba Designer" fill sizes="48px" className="object-cover" />
               </div>
               <span className="text-xl md:text-2xl font-bold tracking-tighter text-white">
                 Marhaba <span className="text-gold">Designer</span>
